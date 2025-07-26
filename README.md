@@ -67,93 +67,7 @@ AA enables:
 
 ````
 
-##🧾 What Each Contract Does
-src/ethereum/MinimalAccount.sol
-Implements a smart wallet with:
 
-validateUserOp(...) — checks signature, nonces, funds.
-
-execute(...) — allows the wallet to call arbitrary actions.
-
-Prefund logic (_payPrefund) to top up EntryPoint if needed 
-GitHub
-+11
-updraft.cyfrin.io
-+11
-GitHub
-+11
-updraft.cyfrin.io
-+4
-GitHub
-+4
-GitHub
-+4
-GitHub
-+3
-updraft.cyfrin.io
-+3
-updraft.cyfrin.io
-+3
-
-src/ethereum/EntryPoint.sol
-The universal hub for AA on Ethereum:
-
-Validates and processes all UserOperations.
-
-Handles gas accounting, bundlers, refunds, and execution routing.
-
-src/ethereum/AccountFactory.sol (or configured in scripts)
-Deploys wallet contracts deterministically (e.g. via CREATE2).
-
-Often paired with HelperConfig.s.sol to manage deploy addresses across networks.
-
-src/zksync/ZkMinimalAccount.sol
-Implements the IAccount interface for native AA on zkSync Era.
-
-Handles:
-
-validateTransaction(...) — checks nonce, signature, funds.
-
-executeTransaction(...) — executes after validation.
-
-Interactions with system contracts like NonceHolder via simulation (requires --system-mode=true) 
-GitHub
-+5
-updraft.cyfrin.io
-+5
-GitHub
-+5
-updraft.cyfrin.io
-+2
-GitHub
-+2
-GitHub
-+2
-updraft.cyfrin.io
-+9
-updraft.cyfrin.io
-+9
-updraft.cyfrin.io
-+9
-
-##🧪 Tests Overview
-test/ethereum/MinimalAccountTest.t.sol: Tests entryPoint invocation, owner vs. non‑owner access, successful execute() calls, and revert conditions 
-GitHub
-+5
-updraft.cyfrin.io
-+5
-GitHub
-+5
-.
-
-test/zksync/ZkMinimalAccountTest.t.sol: Uses Foundry’s forge‑zksync with SystemContractsCaller to simulate nonce updates and transaction flow 
-GitHub
-+12
-updraft.cyfrin.io
-+12
-updraft.cyfrin.io
-+12
-.
 
 ---
 
@@ -171,7 +85,7 @@ updraft.cyfrin.io
 
 ```bash
 # Install dependencies
-npm install
+forge install
 
 # Compile contracts
 forge build
@@ -179,31 +93,54 @@ forge build
 # Run tests with verbose output
 forge test -vvv
 
-# Deploy EntryPoint & Wallet
-npx hardhat run scripts/deploy.ts
 
-# Send a UserOperation
-npx hardhat run scripts/sendUserOp.ts
 ```
 
 ---
 
-## 🔥 Key Smart Contracts
+## 🔑 Key Smart Contracts
 
-### 🧠 `Wallet.sol`
+### `MinimalAccount.sol`
+- A minimal smart contract wallet that supports EIP‑4337.
+- Core responsibilities:
+  - `validateUserOp(UserOperation, ...)`: Verifies signature and nonce, and ensures prefunding.
+  - `execute(address dest, uint256 value, bytes calldata func)`: Executes any call as the wallet.
+  - `owner()`: Returns the current wallet owner (EOA or contract).
+- Complies with `IAccount`, enabling bundler compatibility.
 
-* Verifies signature using `validateUserOp`
-* Executes arbitrary calldata
-* Allows upgradeable security logic
+---
 
-### 🛣️ `EntryPoint.sol`
+### `EntryPoint.sol`
+- The **core hub** of EIP‑4337 transactions.
+- It:
+  - Accepts `UserOperation` bundles.
+  - Validates each op via the associated smart wallet.
+  - Handles prefund logic, refunding gas, and executing the transaction.
+- All UserOps must be sent through this contract.
 
-* Acts as the traffic controller
-* Validates, routes, and executes bundled operations
+---
 
-### 🧱 `SimpleAccountFactory.sol`
+### `AccountFactory.sol`
+- A helper contract to deploy instances of `MinimalAccount` via **`CREATE2`**.
+- Enables deterministic deployment of wallets based on a user-supplied salt.
+- Useful for predicting wallet addresses *before* on-chain deployment.
 
-* Deploys smart wallets deterministically via `CREATE2`
+---
+
+### `ZkMinimalAccount.sol`
+- A zkSync-native account abstraction contract.
+- Implements `IAccount` interface for **zkSync Era**.
+- Key methods:
+  - `validateTransaction(...)`: Signature and nonce checks.
+  - `executeTransaction(...)`: Runs validated calls.
+- Interacts with zkSync system contracts like `NonceHolder`.
+
+---
+
+### `HelperConfig.s.sol`
+- Stores configuration details (e.g. chain-specific addresses).
+- Dynamically selects the correct deployer or entry point depending on the chain (Ethereum, zkSync, etc).
+
 
 ---
 
@@ -222,7 +159,7 @@ AA makes wallets secure, programmable, and **finally user-friendly** for mass ad
 
 ## 🧠 Learn With Me
 
-I'm **@Cheatcode**, and I build my skills in public 💻
+I'm **Cheatcode**, and this is my public journal for documenting every smart contract code learnt and written by me 💻
 Follow me and let’s grow together:
 
 * 🧠 GitHub: [@OxCheatcode](https://github.com/OxCheatcode)
