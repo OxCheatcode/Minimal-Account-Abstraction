@@ -162,8 +162,8 @@ AA makes wallets secure, programmable, and **finally user-friendly** for mass ad
 I'm **Cheatcode**, and this is my public journal for documenting every smart contract code learnt and written by me 💻
 Follow me and let’s grow together:
 
-* 🧠 GitHub: [@OxCheatcode](https://github.com/OxCheatcode)
-* 🐦 X/Twitter: [@OxCheatcode](https://x.com/OxCheatcode)
+* 🧠 GitHub: [Cheatcode](https://github.com/OxCheatcode)
+* 🐦 X/Twitter: [Cheatcode](https://x.com/OxCheatcode)
 
 Feel free to fork this repo and remix your own smart wallet flows.
 
