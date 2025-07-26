@@ -28,13 +28,6 @@ AA enables:
 
 ---
 
-## 📐 Visual Architecture
-
-
-
-> This shows how a `UserOperation` flows through the `EntryPoint`, gets validated by the smart wallet, and finally executes a transaction.
-
----
 
 ## 🔍 Repo Overview
 
