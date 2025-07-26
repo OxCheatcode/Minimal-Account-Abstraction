@@ -1,9 +1,6 @@
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/OxCheatcode/Minimal-Account-Abstraction/main/assets/banner.png" alt="Minimal Account Abstraction by @OxCheatcode" width="100%" />
-</p>
 
-# 🧱 Minimal Account Abstraction (AA) – @Cheatcode's Smart Contract Journal!
+# 🧱 Minimal Account Abstraction (AA) – Cheatcode's Smart Contract Journal!
 
 This repo documents my hands-on learning of Account Abstraction using [Cyfrin's Minimal Account Abstraction](https://github.com/Cyfrin/minimal-account-abstraction) template. I explored how Ethereum is shifting towards more flexible, powerful, and user-friendly wallet experiences.
 
@@ -33,9 +30,7 @@ AA enables:
 
 ## 📐 Visual Architecture
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/OxCheatcode/Minimal-Account-Abstraction/main/assets/aa-flow.png" alt="AA architecture diagram" width="80%" />
-</p>
+
 
 > This shows how a `UserOperation` flows through the `EntryPoint`, gets validated by the smart wallet, and finally executes a transaction.
 
